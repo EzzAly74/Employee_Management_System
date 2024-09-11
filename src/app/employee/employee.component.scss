@@ -1,0 +1,16 @@
+td,th
+{
+    text-align: center;
+}
+.crud-operations
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media(max-width : 992px)
+{
+    ::ng-deep .p-toolbar {
+        justify-content: center;
+    }
+}

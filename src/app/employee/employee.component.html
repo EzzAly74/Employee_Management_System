@@ -1,0 +1,275 @@
+<p-toast></p-toast>
+
+<p-toolbar styleClass="my-4">
+  <ng-template pTemplate="right">
+    <div class="my-2">
+      <button
+        pButton
+        pRipple
+        [label]="'Add New Employee'"
+        icon="pi pi-plus"
+        class="p-button-info mx-2 px-5"
+        (click)="toggleNew()"
+      ></button>
+    </div>
+  </ng-template>
+</p-toolbar>
+
+<p-dialog
+  [(visible)]="showFormNew"
+  [style]="{ width: '450px' }"
+  header="Add New"
+  [modal]="true"
+  class="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="createNewForm" (submit)="addNew(createNewForm)">
+      <div class="field">
+        <label htmlFor="name-en">Name </label>
+        <input
+          pInputText
+          placeholder="Enter Name Here"
+          id="name-en"
+          type="text"
+          formControlName="name"
+        />
+      </div>
+
+      <div class="field">
+        <label htmlFor="name-ar">Position</label>
+        <input
+          pInputText
+          placeholder="Enter Position Here"
+          id="name-ar"
+          type="text"
+          formControlName="position"
+        />
+      </div>
+
+      <div class="field">
+        <label for="department">Department :</label>
+        <input
+          pInputText
+          placeholder="Enter Department Here"
+          id="name-ar"
+          type="text"
+          formControlName="department"
+        />
+      </div>
+
+      <div class="field">
+        <label htmlFor="new-notes">Salary</label>
+        <input
+          pInputText
+          formControlName="salary"
+          id="new-notes"
+          placeholder="Enter Salary Here"
+          type="number"
+        />
+      </div>
+
+      <div class="field">
+        <button
+          class="w-25"
+          pButton
+          label="Create New"
+          type="submit"
+          [disabled]="createNewForm.invalid"
+        ></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
+
+<p-table
+  #dt
+  rowHover="true"
+  [value]="allData"
+  [paginator]="true"
+  [rows]="itemsPerPage"
+  [globalFilterFields]="['_id', 'name', 'department', 'position', 'salary']"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <p-iconField iconPosition="left" class="ml-auto">
+        <p-inputIcon>
+          <i class="pi pi-search"></i>
+        </p-inputIcon>
+        <input
+          pInputText
+          type="text"
+          (input)="onFilter($event)"
+          placeholder="Search ..."
+        />
+      </p-iconField>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>
+        {{ "Id" }}
+      </th>
+      <th>
+        {{ "Name" }}
+      </th>
+      <th>{{ "Position" }}</th>
+      <th>{{ "Department" }}</th>
+      <th>{{ "Salary" }}</th>
+      <th>{{ "Actions" }}</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <td><span class="p-column-title">Id</span> {{ rowData._id }}</td>
+
+      <td><span class="p-column-title">Name</span> {{ rowData.name }}</td>
+      <td>
+        <span class="p-column-title">Position</span> {{ rowData.position }}
+      </td>
+
+      <td>
+        <span class="p-column-title">Department</span>
+        {{ rowData.department }}
+      </td>
+
+      <td>
+        <span class="p-column-title">Salary</span>
+        {{ rowData.salary }}
+      </td>
+
+      <td>
+        <div class="flex crud-operations">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-secondary p-button-outlined mr-2"
+            (click)="editEmployee(rowData)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-outlined p-button-danger"
+            (click)="deleteEmployee(rowData)"
+          ></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-dialog
+  [(visible)]="EmployeeDialog"
+  [style]="{ width: '450px' }"
+  header="Employee Edit"
+  [modal]="true"
+  class="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form
+      [formGroup]="createNewForm"
+      (submit)="saveEmployee(Employee, createNewForm)"
+    >
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          [(ngModel)]="Employee.name"
+          formControlName="name"
+          required
+          autofocus
+        />
+      </div>
+
+      <div class="field">
+        <label for="engName">Position</label>
+        <input
+          type="text"
+          pInputText
+          id="engName"
+          [(ngModel)]="Employee.position"
+          formControlName="position"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="notes">Department</label>
+        <input
+          id="notes"
+          pInputText
+          [(ngModel)]="Employee.department"
+          formControlName="department"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="notes">Salary</label>
+        <input
+          id="notes"
+          pInputText
+          [(ngModel)]="Employee.salary"
+          type="number"
+          formControlName="salary"
+          required
+        />
+      </div>
+      <div class="btns flex gap-3 w-fit">
+        <button
+          pButton
+          label="Cancel"
+          icon="pi pi-times"
+          class="w-25 p-button-outlined p-button-danger"
+          type="button"
+          (click)="hideDialog()"
+        ></button>
+        <button
+          pButton
+          label="Save"
+          icon="pi pi-check"
+          class="w-25 p-button-outlined p-button-success"
+          type="submit"
+          [disabled]="createNewForm.invalid"
+        ></button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="deleteEmployeeDialog"
+  header="Confirm"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+>
+  <div class="flex align-items-center justify-content-center">
+    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+    <span *ngIf="Employee"
+      >Are you sure you want to delete <b>{{ Employee.name }}</b
+      >?</span
+    >
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-times"
+      class="p-button-text"
+      label="No"
+      (click)="deleteEmployeeDialog = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      icon="pi pi-check"
+      class="p-button-text"
+      label="Yes"
+      (click)="confirmDelete(Employee._id)"
+    ></button>
+  </ng-template>
+</p-dialog>
