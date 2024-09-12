@@ -16,11 +16,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { EmployeeService } from './employee.service';
 import { TagModule } from 'primeng/tag';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-employee',
@@ -38,10 +38,10 @@ import { InputIconModule } from 'primeng/inputicon';
     ToastModule,
     InputTextModule,
     ReactiveFormsModule,
-    NgxPaginationModule,
     IconFieldModule,
     InputIconModule,
     TagModule,
+    ProgressSpinnerModule,
   ],
   providers: [MessageService],
   templateUrl: './employee.component.html',
@@ -57,7 +57,7 @@ export class EmployeeComponent {
   endPoint!: string;
   allData: any = [];
   itemsPerPage = 4;
-  loading: boolean = true;
+  loading: boolean = false;
   nameFilter: string = '';
   deleteEmployeeDialog: boolean = false;
   EmployeeDialog: boolean = false;

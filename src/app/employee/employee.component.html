@@ -80,7 +80,13 @@
     </form>
   </ng-template>
 </p-dialog>
-
+<p-progressSpinner
+  styleClass="w-4rem h-4rem flex align-items-center justify-content-center"
+  strokeWidth="8"
+  fill="var(--surface-ground)"
+  animationDuration=".5s"
+  *ngIf="loading"
+/>
 <p-table
   #dt
   rowHover="true"
@@ -88,6 +94,7 @@
   [paginator]="true"
   [rows]="itemsPerPage"
   [globalFilterFields]="['_id', 'name', 'department', 'position', 'salary']"
+  *ngIf="!loading"
 >
   <ng-template pTemplate="caption">
     <div class="flex">
