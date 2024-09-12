@@ -169,8 +169,8 @@
 >
   <ng-template pTemplate="content">
     <form
-      [formGroup]="createNewForm"
-      (submit)="saveEmployee(Employee, createNewForm)"
+      [formGroup]="updateForm"
+      (submit)="saveEmployee(Employee, updateForm)"
     >
       <div class="field">
         <label for="name">Name</label>
@@ -234,7 +234,7 @@
           icon="pi pi-check"
           class="w-25 p-button-outlined p-button-success"
           type="submit"
-          [disabled]="createNewForm.invalid"
+          [disabled]="updateForm.invalid"
         ></button>
       </div>
     </form>
